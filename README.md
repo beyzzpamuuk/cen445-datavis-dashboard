@@ -1,59 +1,179 @@
-# 📊 Global Superstore Exploratory Data Visualization Dashboard
+# Global Superstore - Sales & Profit Explorer
 
-**Course:** CEN445 – Introduction to Data Visualization  
-**Team Members:** Beyza Pamuk, Sultan Kayı, Nasibe Gül Çetin  
-**Repository:** [https://github.com/beyzzpamuuk/cen445-datavis-dashboard](https://github.com/beyzzpamuuk/cen445-datavis-dashboard)
+An interactive **Python / Streamlit / Plotly** dashboard for CEN445. Explore where sales concentrate, where margins disappear, how products co-occur, and what recorded transaction attributes reveal about profitability.
 
-## 📌 Project Overview
-This project presents an interactive exploratory data visualization and machine learning dashboard built with **Python**, **Streamlit**, and **Plotly**. It analyzes the **Global Superstore Dataset** (51,290 transactions and 24 attributes) to uncover actionable insights regarding global sales distribution, product hierarchy performance, shipping flows, cross-selling networks, discount-profit trade-offs, and predictive order profitability.
+**Team:** Beyza Pamuk, Sultan Kayı, Nasibe Gül Çetin.
 
-## 📂 Dataset Details & Preprocessing
-* **Dataset Source:** [Kaggle Global Superstore Dataset](https://www.kaggle.com/datasets/fatihilhan/global-superstore-dataset)
-* **Volume & Structure:** 51,290 rows and 24 columns (exceeding the minimum requirement of 2,000 rows and 7 columns), combining geographical, hierarchical categorical, temporal, and continuous numerical variables.
-* **Data Cleaning & Preprocessing:**
-  * Standardized column naming conventions and parsed temporal attributes (`order_date` into `year` and `year_month`).
-  * Removed duplicate records and handled missing values across critical attributes (`sales`, `profit`, `category`, `country`) and imputed numerical medians where needed.
-  * Detected **5,655 statistical sales outliers** using the **Interquartile Range (IQR)** method (`Q1 - 1.5 * IQR` and `Q3 + 1.5 * IQR`), providing an interactive toggle on the sidebar to include or exclude extreme values dynamically.
+**Repository:** https://github.com/beyzzpamuuk/cen445-datavis-dashboard
 
-## 📈 Dashboard Features & 9 Visualization Methods
-The dashboard features **4 interactive sidebar controls** (Market multiselect dropdown, Order Year range slider, IQR Outlier checkbox, and Category multiselect) and **9 distinct interactive visualizations** (6 Advanced + 3 Analytical):
+**Submission report:** [One-page English PDF](output/pdf/project_report.pdf).
 
-1. **Global Choropleth Map (Advanced):** Country-level spatial revenue distribution with hover tooltips for profit and order counts.
-2. **Hierarchical Treemap (Advanced):** Drill-down across `Market -> Category -> Sub-Category` sized by sales and colored by profit margin.
-3. **Segment-to-Product Sunburst Chart (Advanced):** Radial multi-level hierarchy of `Segment -> Category -> Sub-Category`.
-4. **Order Flow Sankey Diagram (Advanced):** Multi-stage volume flow connecting `Customer Segment -> Shipping Mode -> Product Category`.
-5. **Multidimensional Parallel Coordinates Plot (Advanced):** Interactive axis-brushing across `Sales`, `Profit`, `Discount`, `Quantity`, and `Shipping Cost`.
-6. **Product Co-Occurrence Network Diagram (Advanced):** Graph theory network (`networkx`) mapping top co-purchased sub-categories within multi-item orders.
-7. **Category Profit Violin & Box Plot (Analytical):** Probability density and interquartile spread of profits across categories.
-8. **Pearson Correlation Heatmap (Analytical):** Annotated correlation matrix highlighting relationships among numerical metrics.
-9. **Monthly Sales & Profit Time-Series Trajectory (Analytical):** Interactive multi-line trend chart equipped with a temporal range slider.
+**Presentation preparation:** [English demonstration guide](docs/PRESENTATION.md).
 
-## 🤖 Machine Learning Integration
-* **Model 1 – K-Means Transaction Clustering:** Unsupervised clustering on standardized `Sales`, `Profit`, and `Discount` with an interactive slider (`k = 2 to 6`) to segment high-value profitable orders from discount-driven loss clusters.
-* **Model 2 – Random Forest Profitability Classifier:** Supervised classification predicting whether an order yields positive profit (`Profit > 0`), displaying real-time test accuracy (~83%+) and an interactive **Feature Importance** bar chart demonstrating that `Discount` is the primary driver of margin erosion.
+## Run locally
 
-## 👥 Team Contributions
-All team members collaborated closely across dataset selection, exploratory analysis, dashboard integration, and documentation. Individual primary responsibilities and chart ownership (3 visualizations per member: 2 Advanced + 1 Analytical) are structured as follows:
+Tested on **Windows, Python 3.13.3** with the exact versions in `requirements.txt`. Python 3.13 is recommended; the host's Python 3.15 installation is not the tested environment. No API keys, external database or deployment are required.
 
-* **Beyza Pamuk:**
-  * Co-designed data preprocessing pipeline (IQR outlier detection, date parsing) and Streamlit layout/sidebar filter architecture.
-  * **Visualizations (3):** 1. Global Sales & Profit Choropleth Map (Advanced), 2. Hierarchical Treemap (Advanced), 7. Profit Distribution Violin Plot (Analytical).
-  * Co-implemented K-Means Clustering integration and authored technical documentation.
-* **Sultan Kayı:**
-  * Co-designed data cleaning, missing value imputation, and interactive cross-filtering logic.
-  * **Visualizations (3):** 3. Segment-to-Product Sunburst Chart (Advanced), 4. Order Flow Sankey Diagram (Advanced), 8. Numerical Correlation Heatmap (Analytical).
-  * Co-implemented Random Forest Classification model and feature importance analysis.
-* **Nasibe Gül Çetin:**
-  * Co-designed multi-tab UI consistency, color palettes, and graph data transformations.
-  * **Visualizations (3):** 5. Multidimensional Parallel Coordinates Plot (Advanced), 6. Product Co-Occurrence Network Diagram (Advanced), 9. Monthly Sales & Profit Trajectory with Range Slider (Analytical).
-  * Co-authored the one-page summary report and prepared presentation insights.
+```powershell
+git clone https://github.com/beyzzpamuuk/cen445-datavis-dashboard.git
+cd cen445-datavis-dashboard
+py -3.13 -m venv .venv
+.venv\Scripts\python.exe -m pip install -r requirements.txt
+.venv\Scripts\python.exe -m streamlit run app.py
+```
 
-## 🚀 Setup & Execution Instructions
-1. Clone this repository and navigate to the project directory:
-   `git clone https://github.com/beyzzpamuuk/cen445-datavis-dashboard.git`
-   `cd cen445-datavis-dashboard`
-2. Install the required Python dependencies:
-   `pip install -r requirements.txt`
-3. Ensure `superstore.csv` is placed in the root project folder (included in this repository and sourced from [Kaggle Global Superstore Dataset](https://www.kaggle.com/datasets/fatihilhan/global-superstore-dataset)).
-4. Launch the Streamlit application:
-   `streamlit run app.py`
+On macOS/Linux, create the environment with `python3.13 -m venv .venv`, then use `.venv/bin/python` for the last two commands. Run from the repository directory so Streamlit loads `.streamlit/config.toml` and serves the bundled map correctly. Open the localhost address printed by Streamlit. Stop the server with Ctrl+C. Hosting the app is optional for this assignment.
+
+The CSV and world map are bundled. After dependencies are installed, the dashboard works locally without fetching live data, fonts or a map CDN. Source/repository links naturally need internet if opened. If the default port is busy, append `--server.port 8502`.
+
+## Dataset and observation unit
+
+The source attribution supplied with the original team project is [Global Superstore / Fatih Ilhan / Kaggle](https://www.kaggle.com/datasets/fatihilhan/global-superstore-dataset). The **bundled file is the authoritative snapshot for this submission**, rather than an automatically downloaded replacement. See the source platform for its dataset license.
+
+| Property | Bundled snapshot |
+|---|---|
+| Source shape | **51,290 rows x 27 columns** |
+| Dates | 1 January 2011 - 31 December 2014 |
+| Geography | 147 countries, 7 markets |
+| Categories / sub-categories | 3 / 17 |
+| Validated baskets | **25,754** |
+| Observation unit | One **order line**, not one complete order or one customer |
+| Types | Monetary/continuous measures, units, discounts, identifiers, dates and categorical hierarchies |
+| Main variables | Sales, Profit, Discount, Quantity, Shipping.Cost, Country, Market, Category, Sub.Category, Segment, Order.Date, Ship.Mode |
+| SHA-256 | `7203f16d9e44430c7cd4c92e401df3381141b0b9b8bdec44b6d8e8ecb298b8db` |
+
+Amounts are displayed as USD following the supplied Superstore convention; no currency conversion or inflation adjustment is applied. This is a historical teaching dataset; it does not establish current global retail behavior. Sales values in this particular file are stored as integers. Identifiers, the constant record-count column, Market2 and week number are source metadata and are not treated as independent numeric predictors.
+
+### Validation and preprocessing
+
+`analytics.py` normalizes column names and whitespace, removes exact duplicates, parses dates/numbers, validates required fields and domains, derives calendar months, maps ISO3 countries, and records an explicit audit. Invalid critical records are removed rather than silently replacing target profit. Optional missing categories become `Unknown`. Negative profit is valid; discounts must be 0-1, quantity a positive integer, and sales/shipping cost non-negative. A zero denominator yields undefined margin.
+
+For the supplied snapshot: **0 missing cells, 0 exact duplicates, 0 invalid rows removed, 1 zero-sales line retained, 0 year disagreements and 0 unmapped country codes**. No missing-value imputation was necessary. The app reports these actual results instead of claiming cleaning that did not occur.
+
+**Basket identity matters.** There are 660 raw Order.ID groups with different customer/date/country identities. Grouping only by Order.ID invents co-purchases. Country alone is also insufficient. We establish `(country, order_id, customer_id, order_date)` before filtering; the resulting key is used for counts, networks and model partitions. Under a category filter, the contents of a basket mean its **selected** lines; unselected products are outside the analysis.
+
+**Outliers are sensitivity analysis, not automatic errors.** The full-file sales IQR bounds are -299 to 581. The 5,655 flagged lines carry **56.08% of sales** and remain included by default. The optional exclusion uses this fixed full-data cutoff and displays the omitted records and revenue share. Profits are never winsorized or imputed.
+
+## Nine visualization methods and their questions
+
+The first six are advanced spatial, hierarchical, flow, multivariate and network techniques. Each figure includes a clear question, period/context, encoding explanation, a **filter-dependent computed finding**, interaction instructions, method notes, an accessible data table and a CSV download. A chapter selector computes only the active chapter; expensive model/network results are cached.
+
+| Figure | Method | Analytical question | Interactivity |
+|---|---|---|---|
+| 1 | **Choropleth (advanced)** | Where do sales, total profit and margin concentrate? | Metric dropdown; hover; map pan/zoom; global filters |
+| 2 | **Treemap (advanced)** | Which product-market groups sell well but lose money? | Hierarchical drill-down/path bar; hover; global filters |
+| 3 | **Sunburst (advanced)** | How does product mix differ within customer segments? | Segment/category drill-down; parent shares; hover |
+| 4 | **Sankey (advanced)** | How do sales flow through customer segment, shipping mode and category? | Draggable nodes; link value/profit/share tooltips |
+| 5 | **Parallel coordinates (advanced)** | What attributes accompany discounted loss-making transactions? | Axis range brushing/reordering; sample-size selector |
+| 6 | **Co-purchase network (advanced)** | Which sub-categories share baskets; is association stronger than chance? | Count/lift ranking; minimum count; top-pair limit; node/edge-midpoint hover; pan/zoom |
+| 7 | Violin with embedded box plot | How do profit distributions and loss frequencies differ by category? | Hover; full distribution / central-98% density toggle; zoom |
+| 8 | Correlation heatmap | Which numeric measures move together? | Spearman/Pearson selector; numeric cell labels; hover |
+| 9 | Linked calendar time-series panels | Does sales growth translate into profitable growth? | Metric selector; synchronized date axes; range slider and 6m/1y/all controls; grouped legend; hover |
+
+There are **no pie charts**. Additional model figures support the analysis; they are not substituted for the required nine.
+
+### Important analytical definitions
+
+- **Profit margin:** `sum(profit) / sum(sales) * 100`, independently computed at every country, hierarchy and monthly level. We never color an aggregate with a sales-weighted average of raw line profits.
+- **Treemap:** sales area, zero-centered aggregate margin color. All parent totals equal their children's totals. Initial depth limits visual crowding; click to reveal sub-categories.
+- **Sunburst:** segment identity and within-parent sales share, rather than a second profitability chart. Segment colors have a different, explicitly labeled meaning from the product-category palette.
+- **Sankey:** width means **USD sales**, not number of orders or delivery time. Incoming/outgoing sales balance at shipping nodes. Merging at shipping nodes shows adjacent-stage marginal flows; it does not preserve a specific end-to-end segment/category path.
+- **Network:** each product pair is counted at most once per basket. Support = shared baskets / all selected baskets, including singleton baskets. Lift = support(A,B) / (support(A) x support(B)); values above 1 indicate positive association. Popularity alone does not prove affinity. Thick edges show count; size shows a node's sum of **displayed pair counts**, not unique orders. Top-N selection changes the visible graph. Positions have no business meaning.
+- **Parallel coordinates:** deterministic sample up to 1,500 lines, seed 42. Original units are labeled. Brushing affects this chart only; the finding uses all globally selected lines.
+- **Violin:** by default the pooled 1st-99th percentile is shown to make density readable; exact bounds and omitted count are visible. This display-only restriction never changes findings or summary tables. Uncheck the control to show all tails. Density estimates are unreliable in tiny subsets.
+- **Heatmap:** Spearman is the default for skewed data; Pearson is available for linear association. Fixed [-1,+1] scale; undefined constant-variable correlations remain blank, not zero. Neither implies causation.
+- **Time panels:** actual dates and missing-month gaps; no invented zeros and no dual-axis overlay. The lower panel shows margin (or profit if margin is selected above). Margin comes from monthly totals.
+
+## Machine learning
+
+### K-Means transaction profiles
+
+Features are sales, profit and discount. Z-score scaling gives features comparable units. A deterministic sample of up to 3,000 lines is fitted with k=2-6, seed 42 and 20 initializations. The app shows actual cluster count, profile size/share, mean sales/profit/discount, loss frequency and approximate silhouette (at most 1,200 observations). Semantic names follow the fitted means; cluster labels are not stable customer identities. The plot uses both color and marker shape. Small/degenerate subsets produce guidance instead of a crash. Extreme records remain relevant and can affect centroids; use the outlier sensitivity control to inspect this.
+
+### Random Forest retrospective profitability classification
+
+Target: **profit > 0**. Zero and negative profit belong to the non-profitable class. Predictors: recorded sales, discount, quantity and shipping cost. Actual profit is excluded from predictors. Shipping cost may be known only after fulfillment, so we make **no pre-order prediction or causal claim**.
+
+Two evaluation designs are available:
+
+1. **Unseen baskets:** hold out 25% of composite baskets using GroupShuffleSplit, seed 42. No basket appears in both partitions; dates can overlap.
+2. **Future period:** train before the 75%-of-distinct-dates cutoff and evaluate on later dates, with no shared date/basket. This tests temporal transfer using recorded features, not an ex-ante sales forecast.
+
+Full baskets/dates are split **before** deterministic caps of 18,000 training and 6,000 test lines. The model uses 160 trees, depth 10, minimum leaf size 5 and seed 42. Test data is not used to tune hyperparameters. The majority-class baseline is fitted on training labels, then evaluated on the same test set. Guardrails require sufficient data and both classes in each partition.
+
+The app includes accuracy, baseline accuracy, balanced accuracy, non-profitable recall, macro F1, a confusion matrix, class distributions, date ranges, partition sizes and basket overlap. **Permutation importance** measures the held-out balanced-accuracy drop over four shuffles per feature; error bars are repeat standard deviations, not confidence intervals. Correlated predictors and single-split variability limit interpretation.
+
+Full-data grouped holdout (tested stack, seed 42): **92.17% accuracy**, **74.17% baseline**, **87.26% balanced accuracy**, **77.10% non-profitable recall**. In 6,000 test lines, the model misses 355 of 1,550 non-profitable lines. Metrics change under filters/evaluation settings. Recompute, do not copy the numbers into dynamic UI text.
+
+## Findings worth presenting
+
+- Technology earns **$663,779** profit at **13.99% margin**; Furniture produces **$4.11M** sales but only **6.94% margin**. Revenue scale and profitability are different questions.
+- **APAC / Tables loses $20,128.75** on $225,096 sales (**-8.94% margin**). A sales-only hierarchy conceals this.
+- **92.45%** of selected-full-file lines with discounts above 30% lose money. This observed association does not establish a causal discount effect.
+- Binders and Storage share **899 validated baskets**. The previous raw-order grouping counted 944; correct observation identity changes the result.
+- Removing statistical sales extremes discards **56.08% of sales**. Removing them automatically would change the business question substantially.
+
+All values above describe the complete supplied file. `scripts/export_analysis.py` regenerates [the numerical snapshot](docs/analysis_summary.json), used by the PDF generator.
+
+## Visual design and researched principles
+
+See [design rationale and primary sources](docs/DESIGN_STANDARDS.md). Implementation uses a restrained light canvas, dark navy text, readable system fonts, full-width complex charts, fixed category identities, amber/teal signed scales, explicit zero references, direct labels/numeric cells and consistent units. Details are progressively disclosed instead of crowding the plot.
+
+Every chart has a textual finding and table alternative; point shapes supplement color where applicable. Controls retain native Streamlit keyboard semantics. CSS adds visible focus and reduced-motion behavior. These measures improve access but **do not constitute a screen-reader or full WCAG certification**. Drag-only chart actions have globally filtered/table alternatives; not all Plotly gestures are fully keyboard equivalent.
+
+## Team responsibility and contribution evidence
+
+The three-chart assignment below is retained from the original team's README. It records **ownership/responsibility**, not independently verified authorship of every revision:
+
+| Member | Three owned figures | Preparation and validation responsibility |
+|---|---|---|
+| Beyza Pamuk | 1 choropleth, 2 treemap, 7 violin | Verify country aggregation, all hierarchy margins and distribution interpretation; explain and demonstrate these charts |
+| Sultan Kayı | 3 sunburst, 4 Sankey, 8 heatmap | Verify segment shares, flow conservation and correlation interpretation; explain and demonstrate these charts |
+| Nasibe Gül Çetin | 5 parallel coordinates, 6 network, 9 time panels | Verify sampling, composite baskets, pair metrics and calendar aggregation; explain and demonstrate these charts |
+
+The original project supplied the dataset, initial dashboard and ownership assignment. This revision's code refactor, visual design, analytical corrections, tests, documentation and generated report were produced **with AI coding assistance**. Do not claim these generated changes as independently completed individual student work. Each member must personally review, adapt and validate their three charts, commit their actual work, and explain it in the individual assessment. Record actual human work using [the contribution checklist](docs/CONTRIBUTIONS.md); do not invent completed contributions or backdated commits. Follow any additional course policy on AI assistance.
+
+## Project structure
+
+```text
+app.py                      Streamlit layout, filters, lazy chapter rendering
+analytics.py                Data validation, identity and aggregate calculations
+visuals.py                  Nine figure builders and model figures
+models.py                   K-Means and held-out Random Forest evaluation
+superstore.csv              Original bundled data, unchanged
+assets/style.css             Shared visual tokens and layout
+.streamlit/config.toml       Theme, static map serving, telemetry disabled
+static/geo/                 Offline world map and upstream attribution/license
+docs/                       Methodology, contribution and presentation guidance
+output/pdf/project_report.pdf  One-page English submission
+scripts/                    Reproducible analysis, PDF and optional figure exports
+tests/                      Analytical regression and Streamlit journey checks
+```
+
+## Verification and report generation
+
+Runtime tests need only `requirements.txt`:
+
+```powershell
+.venv\Scripts\python.exe -m unittest discover -s tests -v
+```
+
+The checks reconcile the source totals, preserve zero-sales rows, verify composite baskets, reject the original false network count, check every hierarchy parent/leaf ratio, verify Sankey conservation, construct all nine methods, test disjoint/temporal holdouts and exercise every chapter, alternate metrics, empty/reset filters, extreme exclusions and the old Canada/Furniture/2011/k=6 failure. See [QA notes](docs/QA.md) for observed coverage and limits.
+
+Optional development/report tools:
+
+```powershell
+.venv\Scripts\python.exe -m pip install -r requirements-dev.txt
+.venv\Scripts\python.exe -m ruff check .
+.venv\Scripts\python.exe -m ruff format --check .
+.venv\Scripts\python.exe scripts/export_analysis.py
+.venv\Scripts\python.exe scripts/build_report.py
+```
+
+The PDF script requires Segoe UI (Windows) or DejaVu Sans (Linux) for Turkish names. It refuses a report longer than one page. Optional `scripts/export_figures.py` uses Kaleido plus an installed Chrome/Chromium to render real figure previews into `tmp/figures/`; it is not needed to run the dashboard. PDF rendering can use `pdftoppm` or PyMuPDF. Do not regenerate published numbers without regenerating and visually checking the PDF.
+
+## Submission and live demonstration
+
+Commit/push the final code, data, assets and PDF to the public repository; verify the updated files from a signed-out browser. The PDF contains the repository link. Every team member should upload the **same final PDF** if required by the instructor, and each must deliver their own English presentation. The assignment's official LMS deadline controls submission; a local running app does not replace uploading the files.
+
+Before class: install dependencies, open the app once to warm model caches, confirm the map renders locally, test one filtered story, and keep the PDF plus screenshots as a backup. Do not fabricate live results if a presentation computer is offline or a model is unavailable.
