@@ -266,6 +266,74 @@
       }
     ]
   },
+  "questions": [
+    {
+      "figure": "1 Choropleth",
+      "owner": "Beyza Pamuk",
+      "question": "Where are sales and losses concentrated geographically?",
+      "answer": "United States has the most sales ($2,297,354, 18.2% of total); Turkey has the largest country loss (-$98,447, -90.7% margin)."
+    },
+    {
+      "figure": "2 Treemap",
+      "owner": "Beyza Pamuk",
+      "question": "Which market-product groups sell but lose money?",
+      "answer": "EU / Tables has the largest loss: -$20,998 on $105,380 sales (-19.9% margin)."
+    },
+    {
+      "figure": "3 Sunburst",
+      "owner": "Sultan Kayı",
+      "question": "How does product mix differ across customer segments?",
+      "answer": "Mix is similar across segments; the highest share is Technology in Home Office (39.0% of that segment's sales)."
+    },
+    {
+      "figure": "4 Sankey",
+      "owner": "Sultan Kayı",
+      "question": "How do sales flow from segment through shipping mode to category?",
+      "answer": "Standard Class carries 59.9% of sales ($7,578,889)."
+    },
+    {
+      "figure": "5 Parallel coordinates",
+      "owner": "Nasibe Gül Çetin",
+      "question": "What accompanies loss-making transactions?",
+      "answer": "92.5% of the 10,361 lines discounted above 30% lose money."
+    },
+    {
+      "figure": "6 Network",
+      "owner": "Nasibe Gül Çetin",
+      "question": "Which sub-categories are bought together?",
+      "answer": "Binders + Storage share the most baskets (899), but lift 0.93 shows this reflects popularity, not special affinity."
+    },
+    {
+      "figure": "7 Violin",
+      "owner": "Beyza Pamuk",
+      "question": "Which category loses money most often?",
+      "answer": "Furniture: 31.6% of its order lines lose money (overall 24.5%)."
+    },
+    {
+      "figure": "8 Heatmap",
+      "owner": "Sultan Kayı",
+      "question": "Which numeric measures move together?",
+      "answer": "Discount and profit are negatively associated: Spearman -0.60, Pearson -0.32."
+    },
+    {
+      "figure": "9 Time series",
+      "owner": "Nasibe Gül Çetin",
+      "question": "Does sales growth translate into profitable growth?",
+      "answer": "Sales grew 90% from 2011 to 2014, while annual margin stayed between 11.0% and 11.9%; peak month Nov 2014."
+    },
+    {
+      "figure": "ML K-Means",
+      "owner": "Team",
+      "question": "Which transaction profiles emerge?",
+      "answer": "k=3 (silhouette 0.62); 'Loss-making / high discount' lines average 52% discount and 93% lose money."
+    },
+    {
+      "figure": "ML Random Forest",
+      "owner": "Team",
+      "question": "Can recorded attributes identify non-profitable lines?",
+      "answer": "92.2% accuracy vs 74.2% baseline, 77.1% non-profitable recall; discount is the most important feature."
+    }
+  ],
   "kmeans": {
     "k": 3,
     "silhouette": 0.6247704156335241,
