@@ -139,13 +139,16 @@ Every chart has a textual finding and table alternative; point shapes supplement
 
 ## Team Contributions / Task Distribution
 
-The assignment requires 3 visualizations per member (9 in total). Each member designed and built their own three charts and presents them individually in English. Each member's other tasks are listed alongside, as in the original team README. The same distribution appears in the one-page report.
+The assignment requires 3 visualizations per member (9 in total). Each member designed and built their own three charts and presents them individually in English. The same distribution appears in the one-page report.
 
-| Member | Own visualizations | Shared work |
+| Member | Own visualizations | Other tasks |
 |---|---|---|
-| Beyza Pamuk | Fig 1 Choropleth map (advanced), Fig 2 Treemap (advanced), Fig 7 Violin + box plot | Co-designed preprocessing (IQR outlier detection, date parsing) and the sidebar filter layout; co-implemented K-Means clustering; technical documentation |
-| Sultan Kayı | Fig 3 Sunburst (advanced), Fig 4 Sankey diagram (advanced), Fig 8 Correlation heatmap | Co-designed data cleaning/validation and interactive cross-filtering; co-implemented the Random Forest classifier and feature-importance analysis |
-| Nasibe Gül Çetin | Fig 5 Parallel coordinates (advanced), Fig 6 Co-purchase network (advanced), Fig 9 Linked time-series panels | Co-designed UI consistency, color palette and graph data transformations; co-authored the one-page report and presentation insights |
+| Beyza Pamuk | Fig 1 Choropleth map (advanced), Fig 2 Treemap (advanced), Fig 7 Violin + box plot | Preprocessing (IQR outlier detection, date parsing); sidebar filter layout |
+| Sultan Kayı | Fig 3 Sunburst (advanced), Fig 4 Sankey diagram (advanced), Fig 8 Correlation heatmap | Data cleaning and validation; interactive cross-filtering |
+| Nasibe Gül Çetin | Fig 5 Parallel coordinates (advanced), Fig 6 Co-purchase network (advanced), Fig 9 Linked time-series panels | UI consistency and color palette; graph data transformations |
+| Team (all members) | Machine learning: K-Means clustering and Random Forest classifier (with feature importance) | One-page report; individual presentations |
+
+All members jointly implemented both ML models, co-wrote this report, and each presents their own three charts.
 
 ## Project structure
 

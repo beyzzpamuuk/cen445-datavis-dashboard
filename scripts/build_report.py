@@ -144,20 +144,22 @@ def main():
         [
             p("<b>Beyza Pamuk</b>", "cell"),
             p("Fig 1 Choropleth, Fig 2 Treemap, Fig 7 Violin", "cell"),
-            p("Preprocessing (IQR outliers, date parsing), sidebar filters, K-Means, technical docs", "cell"),
+            p("Preprocessing (IQR outliers, date parsing); sidebar filter layout", "cell"),
         ],
         [
             p("<b>Sultan Kayı</b>", "cell"),
             p("Fig 3 Sunburst, Fig 4 Sankey, Fig 8 Correlation heatmap", "cell"),
-            p("Data cleaning/validation, cross-filtering, Random Forest and feature importance", "cell"),
+            p("Data cleaning and validation; interactive cross-filtering", "cell"),
         ],
         [
             p("<b>Nasibe Gül Çetin</b>", "cell"),
             p("Fig 5 Parallel coordinates, Fig 6 Network, Fig 9 Time series", "cell"),
-            p(
-                "UI consistency, color palette, data transformations, report and presentation insights",
-                "cell",
-            ),
+            p("UI consistency and color palette; graph data transformations", "cell"),
+        ],
+        [
+            p("<b>Team (all members)</b>", "cell"),
+            p("ML: K-Means clustering, Random Forest classifier", "cell"),
+            p("One-page report; individual presentations", "cell"),
         ],
     ]
     team = Table(team_rows, colWidths=[92, 190, 222])
@@ -184,7 +186,10 @@ def main():
             p("Team contributions / task distribution", "h"),
             team,
             Spacer(1, 3),
-            p("AI coding tools assisted with refactoring, tests and documentation in the redesign.", "small"),
+            p(
+                "All members jointly implemented both ML models, co-wrote this report, and each presents their own three charts.",
+                "small",
+            ),
             Spacer(1, 8),
             p(
                 '<b>Repository:</b> <link href="https://github.com/beyzzpamuuk/cen445-datavis-dashboard" color="#007F7A">github.com/beyzzpamuuk/cen445-datavis-dashboard</link><br/><b>Dataset:</b> <link href="https://www.kaggle.com/datasets/fatihilhan/global-superstore-dataset" color="#007F7A">kaggle.com/datasets/fatihilhan/global-superstore-dataset</link>',
