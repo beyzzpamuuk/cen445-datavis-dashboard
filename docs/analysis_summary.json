@@ -1,0 +1,303 @@
+{
+  "dataset": {
+    "raw_rows": 51290,
+    "raw_columns": 27,
+    "missing_cells": 0,
+    "sha256": "7203f16d9e44430c7cd4c92e401df3381141b0b9b8bdec44b6d8e8ecb298b8db",
+    "duplicate_rows": 0,
+    "invalid_rows": 0,
+    "zero_sales_rows": 1,
+    "filled_category_cells": 0,
+    "year_disagreements": 0,
+    "invalid_shipping_dates": 0,
+    "unmapped_countries": [],
+    "ambiguous_order_ids": 660,
+    "clean_rows": 51290,
+    "removed_rows": 0,
+    "outlier_count": 5655,
+    "iqr_lower": -299.0,
+    "iqr_upper": 581.0,
+    "baskets": 25754,
+    "outlier_sales_share": 0.5608366906181768
+  },
+  "sales": 12642905.0,
+  "profit": 1467457.2912800002,
+  "margin": 0.11606962887722404,
+  "loss_rate": 0.24457009163579646,
+  "countries": 147,
+  "categories": [
+    {
+      "category": "Furniture",
+      "sales": 4110884,
+      "profit": 285204.7238,
+      "lines": 9876,
+      "orders": 8240,
+      "discount": 0.16808728230052652,
+      "margin": 6.937795466863088
+    },
+    {
+      "category": "Office Supplies",
+      "sales": 3787330,
+      "profit": 518473.8343,
+      "lines": 31273,
+      "orders": 19471,
+      "discount": 0.13740894701499695,
+      "margin": 13.689692588182176
+    },
+    {
+      "category": "Technology",
+      "sales": 4744691,
+      "profit": 663778.73318,
+      "lines": 10141,
+      "orders": 8430,
+      "discount": 0.13534247115669065,
+      "margin": 13.989925438347829
+    }
+  ],
+  "high_discount_lines": 10361,
+  "high_discount_loss_rate": 0.9245246597818744,
+  "worst_groups": [
+    {
+      "market": "EU",
+      "category": "Furniture",
+      "sub_category": "Tables",
+      "sales": 105380,
+      "profit": -20998.4235,
+      "lines": 91,
+      "orders": 91,
+      "discount": 0.36758241758241755,
+      "margin": -19.926384038717025
+    },
+    {
+      "market": "APAC",
+      "category": "Furniture",
+      "sub_category": "Tables",
+      "sales": 225096,
+      "profit": -20128.7481,
+      "lines": 189,
+      "orders": 181,
+      "discount": 0.33396825396825397,
+      "margin": -8.942294887514661
+    },
+    {
+      "market": "US",
+      "category": "Furniture",
+      "sub_category": "Tables",
+      "sales": 206968,
+      "profit": -17725.4811,
+      "lines": 319,
+      "orders": 307,
+      "discount": 0.2612852664576803,
+      "margin": -8.564358306598121
+    },
+    {
+      "market": "LATAM",
+      "category": "Furniture",
+      "sub_category": "Tables",
+      "sales": 144878,
+      "profit": -12305.852,
+      "lines": 178,
+      "orders": 173,
+      "discount": 0.32640449438202246,
+      "margin": -8.49394110907108
+    },
+    {
+      "market": "US",
+      "category": "Furniture",
+      "sub_category": "Bookcases",
+      "sales": 114879,
+      "profit": -3472.556,
+      "lines": 228,
+      "orders": 224,
+      "discount": 0.211140350877193,
+      "margin": -3.0227944184750912
+    }
+  ],
+  "top_pairs": [
+    {
+      "source": "Binders",
+      "target": "Storage",
+      "baskets": 899,
+      "support": 0.03490719888172711,
+      "lift": 0.9308271016457251
+    },
+    {
+      "source": "Art",
+      "target": "Binders",
+      "baskets": 835,
+      "support": 0.0324221480158422,
+      "lift": 0.8965095202746752
+    },
+    {
+      "source": "Art",
+      "target": "Storage",
+      "baskets": 785,
+      "support": 0.030480702026869613,
+      "lift": 1.0020309364918982
+    },
+    {
+      "source": "Binders",
+      "target": "Paper",
+      "baskets": 665,
+      "support": 0.025821231653335403,
+      "lift": 0.9726358857816827
+    },
+    {
+      "source": "Binders",
+      "target": "Phones",
+      "baskets": 609,
+      "support": 0.02364681214568611,
+      "lift": 0.918237118048274
+    }
+  ],
+  "rf_unseen_baskets": {
+    "available": true,
+    "accuracy": 0.9216666666666666,
+    "balanced_accuracy": 0.8725625226531353,
+    "baseline": 0.7416666666666667,
+    "loss_recall": 0.7709677419354839,
+    "macro_f1": 0.8921210080947499,
+    "matrix": [
+      [
+        1195,
+        355
+      ],
+      [
+        115,
+        4335
+      ]
+    ],
+    "train_n": 18000,
+    "test_n": 6000,
+    "train_baskets": 12235,
+    "test_baskets": 4043,
+    "basket_overlap": 0,
+    "train_start": "2011-01-01 00:00:00",
+    "train_end": "2014-12-31 00:00:00",
+    "test_start": "2011-01-03 00:00:00",
+    "test_end": "2014-12-31 00:00:00",
+    "split_note": "25% of distinct baskets are held out. No basket appears in both sets; dates can overlap.",
+    "train_class_counts": {
+      "0": 4639,
+      "1": 13361
+    },
+    "test_class_counts": {
+      "0": 1550,
+      "1": 4450
+    },
+    "importance": [
+      {
+        "feature": "sales",
+        "importance": 0.00042406669083006054,
+        "std": 0.0007896632089553507
+      },
+      {
+        "feature": "quantity",
+        "importance": 0.0005083363537514152,
+        "std": 0.0003738456447942768
+      },
+      {
+        "feature": "shipping_cost",
+        "importance": 0.0009740848133382718,
+        "std": 0.0010697695994613926
+      },
+      {
+        "feature": "discount",
+        "importance": 0.375588075389634,
+        "std": 0.0030085452739064254
+      }
+    ]
+  },
+  "rf_future_period": {
+    "available": true,
+    "accuracy": 0.9196666666666666,
+    "balanced_accuracy": 0.8638718721370464,
+    "baseline": 0.7475,
+    "loss_recall": 0.7511551155115511,
+    "macro_f1": 0.8865412322187121,
+    "matrix": [
+      [
+        1138,
+        377
+      ],
+      [
+        105,
+        4380
+      ]
+    ],
+    "train_n": 18000,
+    "test_n": 6000,
+    "train_baskets": 11767,
+    "test_baskets": 4469,
+    "basket_overlap": 0,
+    "train_start": "2011-01-01 00:00:00",
+    "train_end": "2014-01-03 00:00:00",
+    "test_start": "2014-01-04 00:00:00",
+    "test_end": "2014-12-31 00:00:00",
+    "split_note": "Earlier dates train the model; dates from 04 Jan 2014 are held out.",
+    "train_class_counts": {
+      "0": 4642,
+      "1": 13358
+    },
+    "test_class_counts": {
+      "0": 1515,
+      "1": 4485
+    },
+    "importance": [
+      {
+        "feature": "quantity",
+        "importance": -0.0005529984436571378,
+        "std": 0.0006642083692018333
+      },
+      {
+        "feature": "sales",
+        "importance": 0.0011195183063456016,
+        "std": 0.0007897114490837297
+      },
+      {
+        "feature": "shipping_cost",
+        "importance": 0.002031524222656317,
+        "std": 0.0004836023949448523
+      },
+      {
+        "feature": "discount",
+        "importance": 0.3628602492356258,
+        "std": 0.004854584434589842
+      }
+    ]
+  },
+  "kmeans": {
+    "k": 3,
+    "silhouette": 0.6247704156335241,
+    "sample_size": 3000,
+    "profiles": [
+      {
+        "cluster": "1. Loss-making / high discount",
+        "lines": 649,
+        "mean_sales": 183.04160246533127,
+        "mean_profit": -99.07863642526965,
+        "mean_discount": 0.5164160246533128,
+        "loss_rate": 0.9275808936825886,
+        "share": 0.21633333333333332
+      },
+      {
+        "cluster": "2. Core / profitable",
+        "lines": 2204,
+        "mean_sales": 167.59392014519057,
+        "mean_profit": 33.182771860254086,
+        "mean_discount": 0.04492286751361162,
+        "loss_rate": 0.06760435571687841,
+        "share": 0.7346666666666667
+      },
+      {
+        "cluster": "3. High-value / profitable",
+        "lines": 147,
+        "mean_sales": 1838.421768707483,
+        "mean_profit": 389.0465005442177,
+        "mean_discount": 0.05270748299319728,
+        "loss_rate": 0.047619047619047616,
+        "share": 0.049
+      }
+    ]
+  }
+}
