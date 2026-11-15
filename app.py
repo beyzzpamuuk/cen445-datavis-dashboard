@@ -171,7 +171,7 @@ def render_chart(number, title, kind, chart, interaction):
                 "toImageButtonOptions": {"format": "png", "scale": 2},
             },
         )
-        st.markdown(f"**What the data says**  \n{chart.finding}")
+        st.markdown(f"**Answer (computed for the current selection)**  \n{chart.finding}")
         with st.expander("Read the chart, inspect data & download"):
             st.write(chart.method)
             st.caption(

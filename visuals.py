@@ -88,12 +88,12 @@ def map_chart(df, metric="sales"):
     fig.update_layout(margin=dict(l=0, r=15, t=10, b=10))
     top = table.loc[table[metric].idxmax()]
     value = f"{top[metric]:.1f}%" if metric == "margin" else money(top[metric])
-    finding = f"{top.country} leads the selected countries on {LABELS[metric].lower()} ({value}). Country totals describe this dataset, not population-adjusted demand."
+    finding = f"{top.country} leads the selected countries on {LABELS[metric]} ({value}). Country totals describe this dataset, not population-adjusted demand."
     return Chart(
         fig,
         table.sort_values(metric, ascending=False),
         finding,
-        "Country totals use ISO 3166-1 alpha-3 codes. Profit margin = sum(profit) / sum(sales). Gray means no mapped observation, not zero. Small territories may be absent at this map resolution; all countries remain in the table. Currency is displayed as USD, following the supplied Superstore convention; no FX conversion is applied.",
+        "Country totals use ISO 3166-1 alpha-3 codes. Profit margin = sum(profit) / sum(sales). Gray means no mapped observation, not zero. Six small territories (Singapore, Hong Kong, Bahrain, Barbados, Martinique, Guadeloupe; about 0.5% of full-data sales) are too small to draw at this 1:110m map resolution; they remain in the table and all totals. Currency is displayed as USD, following the supplied Superstore convention; no FX conversion is applied.",
     )
 
 
@@ -582,7 +582,7 @@ def trend_chart(df, metric="sales"):
     return Chart(
         fig,
         table,
-        f"Across the selected categories, {peak.month:%B %Y} has the highest monthly {LABELS[metric].lower()} ({value}). This is the observed peak, not a forecast.",
+        f"Across the selected categories, {peak.month:%B %Y} has the highest monthly {LABELS[metric]} ({value}). This is the observed peak, not a forecast.",
         "Linked panels share calendar dates but use separate, labeled units; there is no dual-axis overlay. The upper panel shows the selected measure; the lower panel shows margin (or profit when margin is selected). Margin is calculated from monthly totals, not averaged line margins. Drag the bottom range handles or use 6m / 1y / All. Legend clicks control a category in both panels. Marker shapes reinforce category colors; missing months are gaps. This is historical observational data, not a forecast.",
     )
 

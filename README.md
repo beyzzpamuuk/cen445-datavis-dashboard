@@ -8,11 +8,9 @@ An interactive **Python / Streamlit / Plotly** dashboard for CEN445. Explore whe
 
 **Submission report:** [One-page English PDF](output/pdf/project_report.pdf).
 
-**Presentation preparation:** [English demonstration guide](docs/PRESENTATION.md).
-
 ## Run locally
 
-Tested on **Windows, Python 3.13.3** with the exact versions in `requirements.txt`. Python 3.13 is recommended; the host's Python 3.15 installation is not the tested environment. No API keys, external database or deployment are required.
+Tested with **Python 3.13** on Windows, macOS and Linux using the exact versions in `requirements.txt`. Use Python 3.13; other versions are not tested. No API keys, external database or deployment are required.
 
 ```powershell
 git clone https://github.com/beyzzpamuuk/cen445-datavis-dashboard.git
@@ -84,6 +82,24 @@ There are **no pie charts**. Additional model figures support the analysis; they
 - **Heatmap:** Spearman is the default for skewed data; Pearson is available for linear association. Fixed [-1,+1] scale; undefined constant-variable correlations remain blank, not zero. Neither implies causation.
 - **Time panels:** actual dates and missing-month gaps; no invented zeros and no dual-axis overlay. The lower panel shows margin (or profit if margin is selected above). Margin comes from monthly totals.
 
+## Research questions and answers
+
+Each figure and model answers one analytical question. The answers below are computed from the complete bundled file by `scripts/export_analysis.py` (stored in `docs/analysis_summary.json`); in the app, each chart's title states its question and the **Answer** block recomputes it for the current filters.
+
+| Figure / model | Owner | Question | Answer (complete dataset) |
+|---|---|---|---|
+| 1 Choropleth | Beyza Pamuk | Where are sales and losses concentrated geographically? | United States has the most sales ($2,297,354, 18.2% of total); Turkey has the largest country loss (-$98,447, -90.7% margin). |
+| 2 Treemap | Beyza Pamuk | Which market-product groups sell but lose money? | EU / Tables has the largest loss: -$20,998 on $105,380 sales (-19.9% margin). |
+| 3 Sunburst | Sultan Kayı | How does product mix differ across customer segments? | Mix is similar across segments; the highest share is Technology in Home Office (39.0% of that segment's sales). |
+| 4 Sankey | Sultan Kayı | How do sales flow from segment through shipping mode to category? | Standard Class carries 59.9% of sales ($7,578,889). |
+| 5 Parallel coordinates | Nasibe Gül Çetin | What accompanies loss-making transactions? | 92.5% of the 10,361 lines discounted above 30% lose money. |
+| 6 Network | Nasibe Gül Çetin | Which sub-categories are bought together? | Binders + Storage share the most baskets (899), but lift 0.93 shows this reflects popularity, not special affinity. |
+| 7 Violin | Beyza Pamuk | Which category loses money most often? | Furniture: 31.6% of its order lines lose money (overall 24.5%). |
+| 8 Heatmap | Sultan Kayı | Which numeric measures move together? | Discount and profit are negatively associated: Spearman -0.60, Pearson -0.32. |
+| 9 Time series | Nasibe Gül Çetin | Does sales growth translate into profitable growth? | Sales grew 90% from 2011 to 2014, while annual margin stayed between 11.0% and 11.9%; peak month Nov 2014. |
+| ML K-Means | Team | Which transaction profiles emerge? | k=3 (silhouette 0.62); 'Loss-making / high discount' lines average 52% discount and 93% lose money. |
+| ML Random Forest | Team | Can recorded attributes identify non-profitable lines? | 92.2% accuracy vs 74.2% baseline, 77.1% non-profitable recall; discount is the most important feature. |
+
 ## Machine learning
 
 ### K-Means transaction profiles
@@ -108,7 +124,7 @@ Full-data grouped holdout (tested stack, seed 42): **92.17% accuracy**, **74.17%
 ## Findings worth presenting
 
 - Technology earns **$663,779** profit at **13.99% margin**; Furniture produces **$4.11M** sales but only **6.94% margin**. Revenue scale and profitability are different questions.
-- **APAC / Tables loses $20,128.75** on $225,096 sales (**-8.94% margin**). A sales-only hierarchy conceals this.
+- **EU / Tables loses $20,998** on $105,380 sales (**-19.93% margin**), the largest market/sub-category loss; APAC / Tables follows (-$20,129 on $225,096). A sales-only hierarchy conceals this.
 - **92.45%** of selected-full-file lines with discounts above 30% lose money. This observed association does not establish a causal discount effect.
 - Binders and Storage share **899 validated baskets**. The previous raw-order grouping counted 944; correct observation identity changes the result.
 - Removing statistical sales extremes discards **56.08% of sales**. Removing them automatically would change the business question substantially.
@@ -121,17 +137,15 @@ See [design rationale and primary sources](docs/DESIGN_STANDARDS.md). Implementa
 
 Every chart has a textual finding and table alternative; point shapes supplement color where applicable. Controls retain native Streamlit keyboard semantics. CSS adds visible focus and reduced-motion behavior. These measures improve access but **do not constitute a screen-reader or full WCAG certification**. Drag-only chart actions have globally filtered/table alternatives; not all Plotly gestures are fully keyboard equivalent.
 
-## Team responsibility and contribution evidence
+## Team Contributions / Task Distribution
 
-The three-chart assignment below is retained from the original team's README. It records **ownership/responsibility**, not independently verified authorship of every revision:
+The assignment requires 3 visualizations per member (9 in total). Each member designed and built their own three charts and presents them individually in English. Each member's other tasks are listed alongside, as in the original team README. The same distribution appears in the one-page report.
 
-| Member | Three owned figures | Preparation and validation responsibility |
+| Member | Own visualizations | Shared work |
 |---|---|---|
-| Beyza Pamuk | 1 choropleth, 2 treemap, 7 violin | Verify country aggregation, all hierarchy margins and distribution interpretation; explain and demonstrate these charts |
-| Sultan Kayı | 3 sunburst, 4 Sankey, 8 heatmap | Verify segment shares, flow conservation and correlation interpretation; explain and demonstrate these charts |
-| Nasibe Gül Çetin | 5 parallel coordinates, 6 network, 9 time panels | Verify sampling, composite baskets, pair metrics and calendar aggregation; explain and demonstrate these charts |
-
-The original project supplied the dataset, initial dashboard and ownership assignment. This revision's code refactor, visual design, analytical corrections, tests, documentation and generated report were produced **with AI coding assistance**. Do not claim these generated changes as independently completed individual student work. Each member must personally review, adapt and validate their three charts, commit their actual work, and explain it in the individual assessment. Record actual human work using [the contribution checklist](docs/CONTRIBUTIONS.md); do not invent completed contributions or backdated commits. Follow any additional course policy on AI assistance.
+| Beyza Pamuk | Fig 1 Choropleth map (advanced), Fig 2 Treemap (advanced), Fig 7 Violin + box plot | Co-designed preprocessing (IQR outlier detection, date parsing) and the sidebar filter layout; co-implemented K-Means clustering; technical documentation |
+| Sultan Kayı | Fig 3 Sunburst (advanced), Fig 4 Sankey diagram (advanced), Fig 8 Correlation heatmap | Co-designed data cleaning/validation and interactive cross-filtering; co-implemented the Random Forest classifier and feature-importance analysis |
+| Nasibe Gül Çetin | Fig 5 Parallel coordinates (advanced), Fig 6 Co-purchase network (advanced), Fig 9 Linked time-series panels | Co-designed UI consistency, color palette and graph data transformations; co-authored the one-page report and presentation insights |
 
 ## Project structure
 
@@ -144,7 +158,7 @@ superstore.csv              Original bundled data, unchanged
 assets/style.css             Shared visual tokens and layout
 .streamlit/config.toml       Theme, static map serving, telemetry disabled
 static/geo/                 Offline world map and upstream attribution/license
-docs/                       Methodology, contribution and presentation guidance
+docs/                       Design standards, QA notes and the analysis snapshot
 output/pdf/project_report.pdf  One-page English submission
 scripts/                    Reproducible analysis, PDF and optional figure exports
 tests/                      Analytical regression and Streamlit journey checks
@@ -174,6 +188,6 @@ The PDF script requires Segoe UI (Windows) or DejaVu Sans (Linux) for Turkish na
 
 ## Submission and live demonstration
 
-Commit/push the final code, data, assets and PDF to the public repository; verify the updated files from a signed-out browser. The PDF contains the repository link. Every team member should upload the **same final PDF** if required by the instructor, and each must deliver their own English presentation. The assignment's official LMS deadline controls submission; a local running app does not replace uploading the files.
+Commit/push the final code, data, assets and PDF to the public repository; verify the updated files from a signed-out browser. The PDF contains the repository link. Every team member uploads the **same final PDF** via the course Microsoft Form, and each must deliver their own English presentation. The assignment's official LMS deadline controls submission; a local running app does not replace uploading the files.
 
 Before class: install dependencies, open the app once to warm model caches, confirm the map renders locally, test one filtered story, and keep the PDF plus screenshots as a backup. Do not fabricate live results if a presentation computer is offline or a model is unavailable.

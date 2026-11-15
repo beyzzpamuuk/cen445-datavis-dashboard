@@ -21,6 +21,10 @@ def fonts():
     options = [
         (Path("C:/Windows/Fonts/segoeui.ttf"), Path("C:/Windows/Fonts/segoeuib.ttf")),
         (
+            Path("/System/Library/Fonts/Supplemental/Arial.ttf"),
+            Path("/System/Library/Fonts/Supplemental/Arial Bold.ttf"),
+        ),
+        (
             Path("/usr/share/fonts/truetype/dejavu/DejaVuSans.ttf"),
             Path("/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"),
         ),
@@ -31,7 +35,9 @@ def fonts():
             pdfmetrics.registerFont(TTFont("BodyBold", str(bold)))
             pdfmetrics.registerFontFamily("Body", normal="Body", bold="BodyBold")
             return
-    raise FileNotFoundError("Install Segoe UI or DejaVu Sans to regenerate the report with Turkish names.")
+    raise FileNotFoundError(
+        "Install Segoe UI, Arial (macOS) or DejaVu Sans to regenerate the report with Turkish names."
+    )
 
 
 def main():
@@ -47,18 +53,19 @@ def main():
             "eyebrow", fontName="BodyBold", fontSize=8, leading=11, textColor=TEAL, spaceAfter=6
         ),
         "title": ParagraphStyle(
-            "title", fontName="BodyBold", fontSize=23, leading=27, textColor=INK, spaceAfter=5
+            "title", fontName="BodyBold", fontSize=17, leading=20, textColor=INK, spaceAfter=2
         ),
         "subtitle": ParagraphStyle(
-            "subtitle", fontName="Body", fontSize=10, leading=14, textColor=MUTED, spaceAfter=10
+            "subtitle", fontName="Body", fontSize=9.5, leading=12, textColor=MUTED, spaceAfter=6
         ),
         "h": ParagraphStyle(
-            "h", fontName="BodyBold", fontSize=10.1, leading=13, textColor=TEAL, spaceBefore=9, spaceAfter=4
+            "h", fontName="BodyBold", fontSize=9.6, leading=12, textColor=TEAL, spaceBefore=5, spaceAfter=2
         ),
         "body": ParagraphStyle(
-            "body", fontName="Body", fontSize=9.2, leading=13, textColor=INK, alignment=TA_LEFT
+            "body", fontName="Body", fontSize=8.3, leading=10.6, textColor=INK, alignment=TA_LEFT
         ),
         "small": ParagraphStyle("small", fontName="Body", fontSize=8.2, leading=11, textColor=MUTED),
+        "cell": ParagraphStyle("cell", fontName="Body", fontSize=7.8, leading=9.1, textColor=INK),
     }
 
     def p(text, style="body"):
@@ -86,8 +93,8 @@ def main():
                 ("BOX", (0, 0), (-1, -1), 0.5, colors.HexColor("#DCE5E8")),
                 ("VALIGN", (0, 0), (-1, -1), "TOP"),
                 ("LEFTPADDING", (0, 0), (-1, -1), 12),
-                ("TOPPADDING", (0, 0), (-1, -1), 9),
-                ("BOTTOMPADDING", (0, 0), (-1, -1), 9),
+                ("TOPPADDING", (0, 0), (-1, -1), 5),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
             ]
         )
     )
@@ -96,40 +103,74 @@ def main():
             metrics,
             p("Dataset, context and preparation", "h"),
             p(
-                f"The bundled Global Superstore teaching dataset contains <b>{audit['raw_rows']:,} order lines and {audit['raw_columns']} source columns</b>, covering 147 countries in 2011-2014. Source: Kaggle / Fatih Ilhan. Numeric, geographical, categorical and calendar dimensions support multivariate analysis. Validation found no missing cells or exact duplicates; all lines, including one zero-sales line, are retained. We standardize fields, validate dates and numeric domains, and flag {audit['outlier_count']:,} sales extremes using IQR. These carry {audit['outlier_sales_share']:.1%} of sales and remain included by default. Composite country/order/customer/date keys resolve 660 ambiguous raw order IDs into {audit['baskets']:,} baskets."
+                f"The bundled Global Superstore teaching dataset contains <b>{audit['raw_rows']:,} order lines and {audit['raw_columns']} source columns</b>, covering 147 countries in 2011-2014. Source: Kaggle / Fatih Ilhan. Validation found no missing cells or exact duplicates; all lines, including one zero-sales line, are retained. We standardize fields, validate dates and numeric domains, and flag {audit['outlier_count']:,} sales extremes using IQR. These carry {audit['outlier_sales_share']:.1%} of sales and remain included by default. Composite keys give {audit['baskets']:,} baskets."
             ),
             p("Analytical goals and visualization design", "h"),
             p(
-                "We ask where revenue is concentrated, which product-market groups lose money, how customer product mix and shipping flows differ, which products co-occur, and whether growth translates into profit. <b>Nine methods:</b> (1) choropleth, (2) treemap, (3) sunburst, (4) Sankey, (5) parallel coordinates, (6) co-purchase network, (7) violin with box plot, (8) correlation heatmap and (9) linked time-series panels. The first six provide advanced spatial, hierarchical, flow and multivariate views. Controls include market/category selection, year and outlier filters, map/time metrics, correlation method and network thresholds. Each chart has hover/drill/brush/zoom interaction, a computed finding, method notes and downloadable data. Stable category colors, explicit units and zero-centered signed scales support interpretation."
+                "Goal: explain where revenue is earned, where margin is lost, and why. <b>Nine methods</b> (six advanced): choropleth, treemap, sunburst, Sankey, parallel coordinates and co-purchase network; plus violin/box plot, correlation heatmap and linked time-series panels. No pie charts. Global filters (markets, categories, years, IQR outlier exclusion) and chart controls (map/time metric, correlation method, network thresholds, k, evaluation design) drive every view; charts add hover, drill-down, drag, brushing and zoom. Each chart states its question and a recomputed answer."
             ),
-            p("Key findings from the complete dataset", "h"),
+            p("Research questions and answers (complete dataset)", "h"),
         ]
     )
-    cat = {r["category"]: r for r in data["categories"]}
-    findings = [
-        (
-            "Scale is not margin",
-            f"Technology generates ${cat['Technology']['profit']:,.0f} profit at {cat['Technology']['margin']:.1f}% margin; Furniture earns {cat['Furniture']['margin']:.1f}% despite ${cat['Furniture']['sales'] / 1e6:.2f}M in sales.",
-        ),
-        (
-            "Losses hide in aggregates",
-            "APAC / Tables loses $20,129 on $225,096 sales (-8.9% margin). Hierarchy colors use each node's total profit divided by total sales.",
-        ),
-        (
-            "Discount and basket patterns",
-            f"{data['high_discount_loss_rate']:.1%} of lines discounted above 30% lose money. Binders and Storage share {data['top_pairs'][0]['baskets']:,} validated baskets. Both are associations, not causal findings.",
-        ),
+    rows = [[p("<b>Figure / owner</b>", "cell"), p("<b>Question</b>", "cell"), p("<b>Answer</b>", "cell")]]
+    rows += [
+        [
+            p(f"<b>{q['figure']}</b><br/>{q['owner']}", "cell"),
+            p(q["question"], "cell"),
+            p(q["answer"], "cell"),
+        ]
+        for q in data["questions"]
     ]
-    table = Table([[p(f"<b>{a}</b>"), p(b)] for a, b in findings], colWidths=[126, 378])
+    table = Table(rows, colWidths=[92, 150, 262], repeatRows=1)
     table.setStyle(
         TableStyle(
             [
                 ("VALIGN", (0, 0), (-1, -1), "TOP"),
-                ("LINEBELOW", (0, 0), (-1, -1), 0.5, colors.HexColor("#DCE5E8")),
-                ("LEFTPADDING", (0, 0), (-1, -1), 0),
-                ("RIGHTPADDING", (0, 0), (-1, -1), 10),
-                ("TOPPADDING", (0, 0), (-1, -1), 5),
-                ("BOTTOMPADDING", (0, 0), (-1, -1), 5),
+                ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#EDF5F4")),
+                ("LINEBELOW", (0, 0), (-1, -1), 0.4, colors.HexColor("#DCE5E8")),
+                ("LEFTPADDING", (0, 0), (-1, -1), 3),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 5),
+                ("TOPPADDING", (0, 0), (-1, -1), 2),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 2),
+            ]
+        )
+    )
+    team_rows = [
+        [
+            p("<b>Member</b>", "cell"),
+            p("<b>Own visualizations (3 each)</b>", "cell"),
+            p("<b>Other tasks</b>", "cell"),
+        ],
+        [
+            p("<b>Beyza Pamuk</b>", "cell"),
+            p("Fig 1 Choropleth, Fig 2 Treemap, Fig 7 Violin", "cell"),
+            p("Preprocessing (IQR outliers, date parsing), sidebar filters, K-Means, technical docs", "cell"),
+        ],
+        [
+            p("<b>Sultan Kayı</b>", "cell"),
+            p("Fig 3 Sunburst, Fig 4 Sankey, Fig 8 Correlation heatmap", "cell"),
+            p("Data cleaning/validation, cross-filtering, Random Forest and feature importance", "cell"),
+        ],
+        [
+            p("<b>Nasibe Gül Çetin</b>", "cell"),
+            p("Fig 5 Parallel coordinates, Fig 6 Network, Fig 9 Time series", "cell"),
+            p(
+                "UI consistency, color palette, data transformations, report and presentation insights",
+                "cell",
+            ),
+        ],
+    ]
+    team = Table(team_rows, colWidths=[92, 190, 222])
+    team.setStyle(
+        TableStyle(
+            [
+                ("VALIGN", (0, 0), (-1, -1), "TOP"),
+                ("BACKGROUND", (0, 0), (-1, 0), colors.HexColor("#EDF5F4")),
+                ("LINEBELOW", (0, 0), (-1, -1), 0.4, colors.HexColor("#DCE5E8")),
+                ("LEFTPADDING", (0, 0), (-1, -1), 3),
+                ("RIGHTPADDING", (0, 0), (-1, -1), 5),
+                ("TOPPADDING", (0, 0), (-1, -1), 2),
+                ("BOTTOMPADDING", (0, 0), (-1, -1), 2),
             ]
         )
     )
@@ -138,12 +179,12 @@ def main():
             table,
             p("Machine learning and limits", "h"),
             p(
-                f"<b>K-Means</b> uses standardized sales, profit and discount (up to 3,000 lines, k=2-6), with profile summaries and an approximate silhouette score. <b>Random Forest</b> classifies profit &gt; 0 using recorded sales, discount, quantity and shipping cost. In the default basket-disjoint evaluation, accuracy is {rf['accuracy']:.1%} versus a {rf['baseline']:.1%} training-majority baseline; balanced accuracy is {rf['balanced_accuracy']:.1%}, and non-profitable recall is {rf['loss_recall']:.1%} ({rf['test_n']:,} test lines). A second chronological split is available. Confusion matrices and held-out permutation importance expose limitations. This is retrospective classification, not a pre-order forecast; observed correlations and feature importance do not establish causes."
+                f"<b>K-Means</b> clusters standardized sales, profit and discount (k=2-6). <b>Random Forest</b> classifies profit &gt; 0 from sales, discount, quantity and shipping cost, evaluated on held-out baskets (balanced accuracy {rf['balanced_accuracy']:.1%}, {rf['test_n']:,} test lines) or a later time period. Findings are associations in historical data, not causal effects or forecasts."
             ),
-            p("Chart responsibility and reproducibility", "h"),
-            p(
-                "<b>Beyza Pamuk:</b> figures 1, 2, 7. <b>Sultan Kayı:</b> figures 3, 4, 8. <b>Nasibe Gül Çetin:</b> figures 5, 6, 9. This records chart responsibility retained from the original team README; actual individual work is verified through the contribution log and presentation. The revised implementation, validation and documentation were developed with AI assistance, disclosed in the README."
-            ),
+            p("Team contributions / task distribution", "h"),
+            team,
+            Spacer(1, 3),
+            p("AI coding tools assisted with refactoring, tests and documentation in the redesign.", "small"),
             Spacer(1, 8),
             p(
                 '<b>Repository:</b> <link href="https://github.com/beyzzpamuuk/cen445-datavis-dashboard" color="#007F7A">github.com/beyzzpamuuk/cen445-datavis-dashboard</link><br/><b>Dataset:</b> <link href="https://www.kaggle.com/datasets/fatihilhan/global-superstore-dataset" color="#007F7A">kaggle.com/datasets/fatihilhan/global-superstore-dataset</link>',
@@ -158,7 +199,7 @@ def main():
         canvas.setFont("Body", 7.5)
         canvas.setFillColor(MUTED)
         canvas.drawString(
-            44, 18, "CEN445 | One-page project report | Full-dataset snapshot | 14 November 2026"
+            44, 18, "CEN445 | One-page project report | Full-dataset snapshot | 15 November 2026"
         )
         canvas.drawRightString(A4[0] - 44, 18, str(doc.page))
 
@@ -167,8 +208,8 @@ def main():
         pagesize=A4,
         leftMargin=44,
         rightMargin=44,
-        topMargin=32,
-        bottomMargin=40,
+        topMargin=26,
+        bottomMargin=36,
         title="Global Superstore - CEN445 Project Report",
         author="Beyza Pamuk; Sultan Kayı; Nasibe Gül Çetin",
     )
