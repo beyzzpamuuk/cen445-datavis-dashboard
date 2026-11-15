@@ -264,13 +264,13 @@ elif view == views[2]:
         "Focus violin density on the central 98%",
         value=True,
         key="violin_central",
-        help="Only the density display is trimmed; full-data summaries remain available. Exact bounds and omitted counts appear below the chart.",
+        help="Tail observations are excluded from the plotted violin, including its density, inner box plot and mean line. The summary table and finding use all selected lines. Exact bounds and omitted counts appear below the chart.",
     )
     if central:
         lo, hi = selected.profit.quantile([0.01, 0.99])
         omitted = int((~selected.profit.between(lo, hi)).sum())
         st.caption(
-            f"Density display only: {money(lo)} to {money(hi)} (pooled 1st–99th percentiles); {omitted:,} tail observations omitted. The finding and summary table still use every selected line. Uncheck to restore the complete distribution."
+            f"Plot shows {money(lo)} to {money(hi)} only (pooled 1st–99th percentiles); {omitted:,} tail observations are excluded from the violin density, inner box plot and mean line. The finding and summary table still use every selected line. Uncheck to plot the complete distribution."
         )
     render_chart(
         7,

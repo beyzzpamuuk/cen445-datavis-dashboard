@@ -10,7 +10,7 @@ An interactive **Python / Streamlit / Plotly** dashboard for CEN445. Explore whe
 
 ## Run locally
 
-Tested with **Python 3.13** on Windows, macOS and Linux using the exact versions in `requirements.txt`. Use Python 3.13; other versions are not tested. No API keys, external database or deployment are required.
+Tested on **Windows with Python 3.13.3** using the exact versions in `requirements.txt`. Installation instructions are provided below for macOS and Linux. Use Python 3.13; other versions are not tested. No API keys, external database or deployment are required.
 
 ```powershell
 git clone https://github.com/beyzzpamuuk/cen445-datavis-dashboard.git
@@ -64,7 +64,7 @@ The first six are advanced spatial, hierarchical, flow, multivariate and network
 | 4 | **Sankey (advanced)** | How do sales flow through customer segment, shipping mode and category? | Draggable nodes; link value/profit/share tooltips |
 | 5 | **Parallel coordinates (advanced)** | What attributes accompany discounted loss-making transactions? | Axis range brushing/reordering; sample-size selector |
 | 6 | **Co-purchase network (advanced)** | Which sub-categories share baskets; is association stronger than chance? | Count/lift ranking; minimum count; top-pair limit; node/edge-midpoint hover; pan/zoom |
-| 7 | Violin with embedded box plot | How do profit distributions and loss frequencies differ by category? | Hover; full distribution / central-98% density toggle; zoom |
+| 7 | Violin with embedded box plot | How do profit distributions and loss frequencies differ by category? | Hover; full distribution / central-98% plot toggle; zoom |
 | 8 | Correlation heatmap | Which numeric measures move together? | Spearman/Pearson selector; numeric cell labels; hover |
 | 9 | Linked calendar time-series panels | Does sales growth translate into profitable growth? | Metric selector; synchronized date axes; range slider and 6m/1y/all controls; grouped legend; hover |
 
@@ -78,7 +78,7 @@ There are **no pie charts**. Additional model figures support the analysis; they
 - **Sankey:** width means **USD sales**, not number of orders or delivery time. Incoming/outgoing sales balance at shipping nodes. Merging at shipping nodes shows adjacent-stage marginal flows; it does not preserve a specific end-to-end segment/category path.
 - **Network:** each product pair is counted at most once per basket. Support = shared baskets / all selected baskets, including singleton baskets. Lift = support(A,B) / (support(A) x support(B)); values above 1 indicate positive association. Popularity alone does not prove affinity. Thick edges show count; size shows a node's sum of **displayed pair counts**, not unique orders. Top-N selection changes the visible graph. Positions have no business meaning.
 - **Parallel coordinates:** deterministic sample up to 1,500 lines, seed 42. Original units are labeled. Brushing affects this chart only; the finding uses all globally selected lines.
-- **Violin:** by default the pooled 1st-99th percentile is shown to make density readable; exact bounds and omitted count are visible. This display-only restriction never changes findings or summary tables. Uncheck the control to show all tails. Density estimates are unreliable in tiny subsets.
+- **Violin:** by default only the pooled 1st-99th percentile of profit is plotted to make the density readable; exact bounds and omitted count are visible. The excluded tails are removed from the whole plotted violin, so its density, inner box plot (quartiles/median) and mean line are computed from the clipped data. The summary table and computed finding always use all selected lines. Uncheck the control to show all tails. Density estimates are unreliable in tiny subsets.
 - **Heatmap:** Spearman is the default for skewed data; Pearson is available for linear association. Fixed [-1,+1] scale; undefined constant-variable correlations remain blank, not zero. Neither implies causation.
 - **Time panels:** actual dates and missing-month gaps; no invented zeros and no dual-axis overlay. The lower panel shows margin (or profit if margin is selected above). Margin comes from monthly totals.
 
@@ -144,7 +144,7 @@ The assignment requires 3 visualizations per member (9 in total). Each member de
 | Member | Own visualizations | Other tasks |
 |---|---|---|
 | Beyza Pamuk | Fig 1 Choropleth map (advanced), Fig 2 Treemap (advanced), Fig 7 Violin + box plot | Preprocessing (IQR outlier detection, date parsing); sidebar filter layout |
-| Sultan Kayı | Fig 3 Sunburst (advanced), Fig 4 Sankey diagram (advanced), Fig 8 Correlation heatmap | Data cleaning and validation; interactive cross-filtering |
+| Sultan Kayı | Fig 3 Sunburst (advanced), Fig 4 Sankey diagram (advanced), Fig 8 Correlation heatmap | Data cleaning and validation; global filtering (sidebar filters apply to all charts) |
 | Nasibe Gül Çetin | Fig 5 Parallel coordinates (advanced), Fig 6 Co-purchase network (advanced), Fig 9 Linked time-series panels | UI consistency and color palette; graph data transformations |
 | Team (all members) | Machine learning: K-Means clustering and Random Forest classifier (with feature importance) | One-page report; individual presentations |
 

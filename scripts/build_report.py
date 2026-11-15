@@ -107,7 +107,7 @@ def main():
             ),
             p("Analytical goals and visualization design", "h"),
             p(
-                "Goal: explain where revenue is earned, where margin is lost, and why. <b>Nine methods</b> (six advanced): choropleth, treemap, sunburst, Sankey, parallel coordinates and co-purchase network; plus violin/box plot, correlation heatmap and linked time-series panels. No pie charts. Global filters (markets, categories, years, IQR outlier exclusion) and chart controls (map/time metric, correlation method, network thresholds, k, evaluation design) drive every view; charts add hover, drill-down, drag, brushing and zoom. Each chart states its question and a recomputed answer."
+                "Goal: explain where revenue is earned, where margin is lost, and which factors are associated with losses. <b>Nine methods</b> (six advanced): choropleth, treemap, sunburst, Sankey, parallel coordinates and co-purchase network; plus violin/box plot, correlation heatmap and linked time-series panels. No pie charts. Global filters (markets, categories, years, IQR outlier exclusion) and chart controls (map/time metric, correlation method, network thresholds, k, evaluation design) drive every view; charts add hover, drill-down, drag, brushing and zoom. Each chart states its question and a recomputed answer."
             ),
             p("Research questions and answers (complete dataset)", "h"),
         ]
@@ -149,7 +149,7 @@ def main():
         [
             p("<b>Sultan Kayı</b>", "cell"),
             p("Fig 3 Sunburst, Fig 4 Sankey, Fig 8 Correlation heatmap", "cell"),
-            p("Data cleaning and validation; interactive cross-filtering", "cell"),
+            p("Data cleaning and validation; global filtering", "cell"),
         ],
         [
             p("<b>Nasibe Gül Çetin</b>", "cell"),

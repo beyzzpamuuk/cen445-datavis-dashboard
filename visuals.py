@@ -422,7 +422,7 @@ def violin_chart(df, central=False):
     )
     worst = table.sort_values("loss_rate", ascending=False).iloc[0]
     note = (
-        f" Display shows the pooled 1st–99th percentile ({money(low)} to {money(high)}); {len(df) - len(shown):,} tails are hidden from the density only."
+        f" Display shows the pooled 1st–99th percentile ({money(low)} to {money(high)}); {len(df) - len(shown):,} tail observations are excluded from the plotted violin, including its density, inner box plot and mean line. The summary table and finding use all selected lines."
         if central
         else " All valid profit values are shown; extreme values can compress the central density."
     )
@@ -430,7 +430,7 @@ def violin_chart(df, central=False):
         fig,
         table,
         f"{worst.category} has the highest selected loss frequency ({worst.loss_rate:.1%}); its median order-line profit is {money(worst.median_profit)}. Summary statistics use all selected lines.",
-        "Width approximates profit density; the inner box shows quartiles and median; the dashed horizontal reference is zero profit. Mean lines are also displayed. Small samples do not support stable density estimates."
+        "Width approximates profit density; the inner box shows quartiles and median; the dotted horizontal reference is zero profit. Mean lines are also displayed. Small samples do not support stable density estimates."
         + note,
     )
 
